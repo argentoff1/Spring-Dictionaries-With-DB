@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New pair</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/dictionaries}" th:object="${dictionary}">
+    <div class="choose__language">
+        <label>
+            <input type="radio" name="chooseLanguage" value="english">
+            English
+        </label>
+        <br/>
+        <label>
+            <input type="radio" name="chooseLanguage" value="deutsch">
+            Deutsch
+        </label>
+    </div>
+
+    <br/>
+
+    <label for="word">Enter word: </label>
+    <input type="text" th:field="*{word}" id="word">
+    <div style="color:red" th:if="${#fields.hasErrors('word')}" th:errors="*{word}">Word error</div>
+
+    <br/>
+
+    <label for="translatedWord">Enter translatedWord: </label>
+    <input type="text" th:field="*{translatedWord}" id="translatedWord">
+    <div style="color:red" th:if="${#fields.hasErrors('translatedWord')}" th:errors="*{translatedWord}">Translated word
+        error
+    </div>
+
+    <br/>
+
+    <div class="pair__create" th:if="${}">
+        <input type="submit" value="Create!"/>
+    </div>
+</form>
+
+</body>
+</html>
