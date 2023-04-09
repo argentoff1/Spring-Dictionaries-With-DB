@@ -5,16 +5,16 @@
     transform: translate(-50%, -50%);
 }
 
-.lng__eng {
+.lng__dictionaries {
     position: relative;
     margin-bottom: 100px;
 }
 
-.lng__eng a {
+.lng__dictionaries a {
     margin-right: 10px;
 }
 
-.lng__eng:hover .lng__list-wrapper{
+.lng__dictionaries:hover .lng__list-wrapper{
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);

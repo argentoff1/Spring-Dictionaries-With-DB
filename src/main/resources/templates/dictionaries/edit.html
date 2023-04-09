@@ -23,8 +23,16 @@
 
     <br/>
 
-    <div class="pair__create">
-        <input type="submit" value="Update!"/>
+    <div class="pair__update">
+        <form th:method="POST" th:action="@{/dictionaries/{id}(id=${dictionary.getId()})}">
+            <input type="submit" value="Update!"/>
+        </form>
+    </div>
+
+    <div class="pair__delete">
+        <form th:method="DELETE" th:action="@{/dictionaries/{id}(id=${dictionary.getId()})}">
+            <input type="submit" value="Delete"/>
+        </form>
     </div>
 </form>
 

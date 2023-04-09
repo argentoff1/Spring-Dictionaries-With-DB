@@ -10,31 +10,16 @@
 <div th:each="dictionary : ${dictionaries}">
     <div class="block">
 
-        <div class="lng__eng">
-            <a href="#" class="lng__link">From English</a>
+        <div class="lng__dictionaries">
+            <a href="#" class="lng__link">Dictionaries</a>
             <div class="lng__list-wrapper">
                 <div class="lng__list" th:each="dictionary : ${dictionaries}">
                     <a th:href="@{/dictionaries/{id}(id=${dictionary.getId()})}"
-                       th:text="${dictionary.getWord() + ', ' + dictionary.getTranslatedWord()}">Value</a>
-                    <a href="/dictionaries/{id}/edit">Value2</a>
+                       th:text="${dictionary.getWord() + ', ' + dictionary.getTranslatedWord()}">English dictionary</a>
+                    <a href="/dictionaries/{id}/edit">Deutsch dictionary</a>
                 </div>
             </div>
         </div>
-
-        <div class="lng__deu">
-            <a href="#" class="lng__link">From Deutsch</a>
-            <div class="lng__list-wrapper">
-                <div class="lng__list">
-                    <a href="/dictionaries/{id}/edit">Aluew1</a>
-                    <a href="#">Aluew2</a>
-                </div>
-            </div>
-        </div>
-
-        <br/>
-        <hr/>
-
-        <a href="/dictionaries/new">Create a new pair in the dictionary</a>
     </div>
     <!--    <div class="nav">-->
     <!--        <li class="nav__item">-->

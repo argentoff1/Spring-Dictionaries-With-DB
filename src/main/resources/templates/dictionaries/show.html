@@ -5,6 +5,18 @@
     <title>Show</title>
 </head>
 <body>
+<!--/*@thymesVar id="dictionaries" type="java.util.List<com.mmtr.dictionariesspringboot.models.Dictionary"*/-->
+<div th:each="dictionary : ${dictionaries}">
+        <a th:href="@{/dictionaries/{id}(id=${dictionary.getId()})}"
+           th:text="${dictionary.getWord() + ', ' + dictionary.getTranslatedWord()}">Value</a>
+</div>
+<div class="lng__info" th:each="dictionary : ${dictionaries}">
+    <a th:href="@{/dictionaries/{id}(id=${dictionary.getId()})}"
+       th:text="${dictionary.getWord() + ', ' + dictionary.getTranslatedWord()}">Value</a>
+</div>
+
+
+
 
 <p th:text="${dictionary.getWord() + ', ' + dictionary.getTranslatedWord()()}">VALUE</p>
 <p th:text="${'Translated word: ' + dictionary.getTranslatedWord()()}">VALUE</p>
@@ -12,9 +24,10 @@
 
 <a th:href="@{/dictionaries/{id}/edit(id=${dictionary.getId()})}">Edit</a>
 
-<form th:method="DELETE" th:action="@{/dictionaries/{id}(id=${dictionary.getId()})}">
-    <input type="submit" value="Delete"/>
+<form th:method="GET" th:action="@{/dictionaries/{id}(id=${dictionary.getId()})}">
+    <input type="submit" value="Create a new pair in the dictionary"/>
 </form>
+
 
 </body>
 </html>
