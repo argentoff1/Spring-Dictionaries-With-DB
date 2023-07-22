@@ -1,76 +1,54 @@
 package com.mmtr.dictionariesspringboot.controllers;
 
-import com.mmtr.dictionariesspringboot.dao.DictionaryDAO;
-import com.mmtr.dictionariesspringboot.models.Dictionary;
-import jakarta.validation.Valid;
+import com.mmtr.dictionariesspringboot.entity.Dictionary;
+import com.mmtr.dictionariesspringboot.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/dictionaries")
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
 public class DictionariesController {
-    private final DictionaryDAO dictionaryDAO;
-
     @Autowired
-    public DictionariesController(DictionaryDAO dictionaryDAO) {
-        this.dictionaryDAO = dictionaryDAO;
+    private DictionaryService dictionaryService;
+
+    @GetMapping("/dictionaries")
+    public List<Dictionary> showAllDictionaries() {
+        List<Dictionary> allDictionaries = dictionaryService.getAllDictionaries();
+
+        return allDictionaries;
     }
 
-    @GetMapping
-    public String index(Model model) {
-        model.addAttribute("dictionaries", dictionaryDAO.index());
+    @GetMapping("/dictionaries/{id}")
+    public Dictionary showDictionary(@PathVariable int id) {
+        Dictionary dictionary = dictionaryService.getDictionary(id);
 
-        return "dictionaries/index";
+        return dictionary;
     }
 
-    @GetMapping("/id")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("dictionary", dictionaryDAO.show(id));
+    @PostMapping("/dictionaries")
+    public Dictionary addNewDictionary(@RequestBody Dictionary dictionary) {
+        dictionaryService.saveDictionary(dictionary);
 
-        return "dictionaries/show";
+        return dictionary;
     }
 
-    @GetMapping("/new")
-    public String newWord(@ModelAttribute("dictionary") Dictionary dictionary) {
-        return "dictionaries/new";
+    @PutMapping("/dictionaries")
+    public Dictionary updateDictionary(@RequestBody Dictionary dictionary) {
+        dictionaryService.saveDictionary(dictionary);
+
+        return dictionary;
     }
 
-    @PostMapping
-    public String create(@ModelAttribute("dictionary") @Valid Dictionary dictionary,
-                         BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "dictionaries/new";
-        }
+    @DeleteMapping("/dictionaries/{id}")
+    public String deleteDictionary(@PathVariable int id) {
+        Dictionary dictionary = dictionaryService.getDictionary(id);
 
-        dictionaryDAO.save(dictionary);
-        return "redirect:/dictionaries";
-    }
+        dictionaryService.deleteDictionary(id);
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("dictionary", dictionaryDAO.show(id));
-
-        return "dictionaries/edit";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("dictionary") @Valid Dictionary dictionary,
-                         BindingResult bindingResult, @PathVariable("id") int id) {
-        if (bindingResult.hasErrors()) {
-            return "dictionaries/edit";
-        }
-
-        dictionaryDAO.update(id, dictionary);
-        return "redirect:dictionaries";
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        dictionaryDAO.delete(id);
-
-        return "redirect:dictionaries";
+        return "Dictionary with ID = " + id + " was deleted";
     }
 }
